@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}My Orders - Marketplace{% endblock %}
+
+{% block content %}
+<style>
+  /* Colores crema/dorado */
+  .bg-cream-100 { background-color: #FFF8E1; }
+  .bg-cream-200 { background-color: #FFECB3; }
+  .bg-cream-300 { background-color: #FFE082; }
+  .bg-cream-400 { background-color: #FFD54F; }
+  .bg-cream-500 { background-color: #FFCA28; }
+  .bg-cream-600 { background-color: #FFC107; }
+  .text-cream-600 { color: #FFC107; }
+  .text-cream-700 { color: #FFA000; }
+  .border-cream-400 { border-color: #FFD54F; }
+  .border-cream-500 { border-color: #FFCA28; }
+  .hover\:bg-cream-500:hover { background-color: #FFCA28; }
+  .hover\:bg-cream-600:hover { background-color: #FFC107; }
+  .hover\:text-cream-600:hover { color: #FFC107; }
+  .focus\:ring-cream-500:focus { --tw-ring-color: #FFCA28; }
+  
+  /* Colores rojo */
+  .bg-red-500 { background-color: #F44336; }
+  .bg-red-600 { background-color: #E53935; }
+  .bg-red-700 { background-color: #4c0909; }
+  .text-red-500 { color: #F44336; }
+  .text-red-600 { color: #E53935; }
+  .border-red-500 { border-color: #F44336; }
+  .border-red-600 { border-color: #E53935; }
+  .hover\:bg-red-600:hover { background-color: #E53935; }
+  .hover\:bg-red-700:hover { background-color: #461c1c; }
+  
+  /* Colores azul claro */
+  .bg-lightblue-100 { background-color: #E1F5FE; }
+  .bg-lightblue-200 { background-color: #B3E5FC; }
+  .bg-lightblue-300 { background-color: #81D4FA; }
+  .bg-lightblue-400 { background-color: #4ff7e3; }
+  .bg-lightblue-500 { background-color: #29B6F6; }
+  .bg-lightblue-600 { background-color: #03A9F4; }
+  .text-lightblue-600 { color: #03A9F4; }
+  .text-lightblue-700 { color: #0288D1; }
+  .border-lightblue-400 { border-color: #4FC3F7; }
+  .border-lightblue-500 { border-color: #29B6F6; }
+  .hover\:bg-lightblue-500:hover { background-color: #29B6F6; }
+  .hover\:bg-lightblue-600:hover { background-color: #03A9F4; }
+  .hover\:text-lightblue-600:hover { color: #03A9F4; }
+  .focus\:ring-lightblue-500:focus { --tw-ring-color: #29B6F6; }
+</style>
+    <!-- My Orders Section -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-heading font-bold mb-8">My Orders</h1>
+            
+            {% if orders %}
+                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Order ID
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Total
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for order in orders %}
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            {{ order.id }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ order.created_at|date:"F j, Y" }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {% if order.status == 'pending' %}
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                                    Pending
+                                                </span>
+                                            {% elif order.status == 'processing' %}
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                    Processing
+                                                </span>
+                                            {% elif order.status == 'shipped' %}
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                                    Shipped
+                                                </span>
+                                            {% elif order.status == 'delivered' %}
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                    Delivered
+                                                </span>
+                                            {% elif order.status == 'cancelled' %}
+                                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                    Cancelled
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            ${{ order.total_amount|floatformat:2 }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <a href="{% url 'order_detail' order.id %}" class="text-primary-600 hover:text-primary-900">View Details</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <div class="bg-white rounded-lg shadow-sm p-8 text-center">
+                    <div class="text-gray-400 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-semibold mb-2">No orders yet</h2>
+                    <p class="text-gray-600 mb-6">You haven't placed any orders yet.</p>
+                    <a href="{% url 'product_list' %}" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        Start Shopping
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

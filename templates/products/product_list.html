@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+
+{% block title %}Products - Marketplace{% endblock %}
+
+{% block content %}
+<style>
+  /* TUS ESTILOS ORIGINALES - NO MODIFICAR */
+  .bg-cream-100 { background-color: #FFF8E1; }
+  .bg-cream-200 { background-color: #FFECB3; }
+  .bg-cream-300 { background-color: #FFE082; }
+  .bg-cream-400 { background-color: #FFD54F; }
+  .bg-cream-500 { background-color: #FFCA28; }
+  .bg-cream-600 { background-color: #FFC107; }
+  .text-cream-600 { color: #FFC107; }
+  .text-cream-700 { color: #FFA000; }
+  .border-cream-400 { border-color: #FFD54F; }
+  .border-cream-500 { border-color: #FFCA28; }
+  .hover\:bg-cream-500:hover { background-color: #FFCA28; }
+  .hover\:bg-cream-600:hover { background-color: #FFC107; }
+  .hover\:text-cream-600:hover { color: #FFC107; }
+  .focus\:ring-cream-500:focus { --tw-ring-color: #FFCA28; }
+  
+  .bg-red-500 { background-color: #F44336; }
+  .bg-red-600 { background-color: #E53935; }
+  .bg-red-700 { background-color: #4c0909; }
+  .text-red-500 { color: #F44336; }
+  .text-red-600 { color: #E53935; }
+  .border-red-500 { border-color: #F44336; }
+  .border-red-600 { border-color: #E53935; }
+  .hover\:bg-red-600:hover { background-color: #E53935; }
+  .hover\:bg-red-700:hover { background-color: #461c1c; }
+  
+  .bg-lightblue-100 { background-color: #E1F5FE; }
+  .bg-lightblue-200 { background-color: #B3E5FC; }
+  .bg-lightblue-300 { background-color: #81D4FA; }
+  .bg-lightblue-400 { background-color: #4ff7e3; }
+  .bg-lightblue-500 { background-color: #29B6F6; }
+  .bg-lightblue-600 { background-color: #03A9F4; }
+  .text-lightblue-600 { color: #03A9F4; }
+  .text-lightblue-700 { color: #0288D1; }
+  .border-lightblue-400 { border-color: #4FC3F7; }
+  .border-lightblue-500 { border-color: #29B6F6; }
+  .hover\:bg-lightblue-500:hover { background-color: #29B6F6; }
+  .hover\:bg-lightblue-600:hover { background-color: #03A9F4; }
+  .hover\:text-lightblue-600:hover { color: #03A9F4; }
+  .focus\:ring-lightblue-500:focus { --tw-ring-color: #29B6F6; }
+</style>
+
+    <!-- Product Listing Section -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row">
+                <!-- Sidebar / Filters -->
+                <div class="w-full md:w-1/4 lg:w-1/5 mb-8 md:mb-0 md:pr-6">
+                    <div class="bg-black rounded-lg shadow-sm p-4 md:p-6 mb-6 sticky top-4">
+                        <h3 class="font-heading font-semibold text-lg mb-4 pb-2 border-b border-gray-200">Categories</h3>
+                        <nav class="space-y-2">
+                            <a href="{% url 'product_list' %}" class="block text-gray-600 hover:text-primary-600 {% if not category_slug %}font-semibold text-primary-600{% endif %}">
+                                All Products
+                            </a>
+                            
+                            {% for category in categories %}
+                                <a href="{% url 'product_list_by_category' category.slug %}" class="block text-gray-600 hover:text-primary-600 {% if category_slug == category.slug %}font-semibold text-primary-600{% endif %}">
+                                    {{ category.name }}
+                                </a>
+                            {% empty %}
+                                <p class="text-sm text-gray-500">No categories available.</p>
+                            {% endfor %}
+                        </nav>
+                        
+                        <h3 class="font-heading font-semibold text-lg mb-4 mt-8 pb-2 border-b border-gray-200">Pricing</h3>
+                        <div class="text-sm">
+                            {% if user_type == 'guest' %}
+                                <div class="flex items-center mb-2">
+                                    <span class="w-3 h-3 bg-warning-500 rounded-full mr-2"></span>
+                                    <span class="text-warning-600 font-medium">Guest pricing: +10% markup</span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Create an account to access regular pricing!</p>
+                                <a href="{% url 'account_signup' %}" class="w-full flex justify-center py-3 px-4 border border-black rounded-md shadow-sm text-sm font-medium text-black bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                    Sign Up Now
+                                </a>
+                            {% elif user_type == 'business' %}
+                                <div class="flex items-center mb-2">
+                                    <span class="w-3 h-3 bg-accent-500 rounded-full mr-2"></span>
+                                    <span class="text-accent-600 font-medium">Business pricing: 25% discount</span>
+                                </div>
+                                <p class="text-gray-600 text-sm">You're enjoying our best pricing as a business member!</p>
+                            {% else %}
+                                <div class="flex items-center mb-2">
+                                    <span class="w-3 h-3 bg-success-500 rounded-full mr-2"></span>
+                                    <span class="text-success-600 font-medium">Regular member pricing</span>
+                                </div>
+                                <p class="text-gray-600 mb-4">Upgrade to a business account for a 25% discount!</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Grid -->
+                <div class="w-full md:w-3/4 lg:w-4/5">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                        <h1 class="text-2xl md:text-3xl font-heading font-bold mb-2 sm:mb-0">
+                            {% if category_slug %}
+                                {{ category.name }}
+                            {% else %}
+                                All Products
+                            {% endif %}
+                        </h1>
+                        
+                        <form method="get" action="{% url 'product_list' %}" class="flex items-center space-x-2">
+                            <span class="text-sm text-gray-600">Sort by:</span>
+                            <select name="sort" onchange="this.form.submit()" class="text-sm border border-gray-300 rounded-md focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 shadow-sm">
+                                <option value="latest" {% if request.GET.sort == 'latest' %}selected{% endif %}>Latest</option>
+                                <option value="price_low_to_high" {% if request.GET.sort == 'price_low_to_high' %}selected{% endif %}>Price: Low to High</option>
+                                <option value="price_high_to_low" {% if request.GET.sort == 'price_high_to_low' %}selected{% endif %}>Price: High to Low</option>
+                                <option value="name_a_to_z" {% if request.GET.sort == 'name_a_to_z' %}selected{% endif %}>Name: A to Z</option>
+                            </select>
+                        </form>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {% for item in products_with_prices %}
+                            <div class="bg-black rounded-lg shadow-sm overflow-hidden transition-shadow duration-300 hover:shadow-md group border border-gray-100">
+                                <a href="{{ item.product.get_absolute_url }}">
+                                    <div class="aspect-w-16 aspect-h-9 bg-gray-100 relative overflow-hidden">
+                                        {% if item.product.image %}
+                                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
+                                        {% else %}
+                                            <div class="flex items-center justify-center h-full bg-gray-100 text-gray-400">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                </svg>
+                                            </div>
+                                        {% endif %}
+                                        
+                                        {% if user.is_authenticated and user.user_type == 'business' %}
+                                            <div class="absolute top-2 right-2 bg-accent-500 text-black text-xs px-2 py-1 font-semibold rounded-full shadow-md">
+                                                25% OFF
+                                            </div>
+                                        {% elif not user.is_authenticated %}
+                                            <div class="absolute top-2 right-2 bg-warning-500 text-black text-xs px-2 py-1 font-semibold rounded-full shadow-md">
+                                                +10%
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </a>
+                                
+                                <div class="p-4">
+                                    <a href="{{ item.product.get_absolute_url }}">
+                                        <h3 class="font-medium text-gray-900 mb-1 group-hover:text-primary-600">{{ item.product.name }}</h3>
+                                    </a>
+                                    <p class="text-sm text-gray-500 mb-3 line-clamp-2">{{ item.product.description|truncatechars:80 }}</p>
+                                    
+                                    <div class="flex items-center justify-between mt-4">
+                                        <div>
+                                            <span class="text-lg font-semibold text-gray-900">${{ item.price|floatformat:2 }}</span>
+                                            {% if user_type == 'guest' %}
+                                                <span class="text-xs text-warning-600 ml-1">(Guest price)</span>
+                                            {% elif user_type == 'business' %}
+                                                <span class="text-xs text-accent-600 ml-1">(Business price)</span>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <form method="post" action="{% url 'add_to_cart' item.product.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="flex items-center space-x-1 px-3 py-2 bg-primary-600 hover:bg-primary-700 text-black text-sm font-medium rounded-md shadow-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                                </svg>
+                                                <span>Add</span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="col-span-full text-center py-12">
+                                <div class="text-gray-400 mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <p class="text-gray-500 text-lg">No products available in this category.</p>
+                                <p class="text-gray-500 mt-2">Please check back later or browse another category.</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- PAGINATION CORREGIDA -->
+                    {% if products_with_prices %}
+                        <div class="mt-8 flex justify-center">
+                            <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                {% if page_obj.has_previous %}
+                                    <a href="?page={{ page_obj.previous_page_number }}{% if category_slug %}&category={{ category_slug }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}"
+                                       class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-black text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                {% else %}
+                                    <span class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-gray-800 text-sm font-medium text-gray-400 cursor-not-allowed">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                {% endif %}
+
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <span class="z-10 bg-primary-600 border-primary-600 text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                            {{ num }}
+                                        </span>
+                                    {% else %}
+                                        <a href="?page={{ num }}{% if category_slug %}&category={{ category_slug }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}"
+                                           class="bg-black border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                                            {{ num }}
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <a href="?page={{ page_obj.next_page_number }}{% if category_slug %}&category={{ category_slug }}{% endif %}{% if request.GET.sort %}&sort={{ request.GET.sort }}{% endif %}"
+                                       class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-black text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </a>
+                                {% else %}
+                                    <span class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-gray-800 text-sm font-medium text-gray-400 cursor-not-allowed">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                {% endif %}
+                            </nav>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

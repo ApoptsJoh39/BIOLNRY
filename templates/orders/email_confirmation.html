@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Confirmation #{{ order.id }}{% endblock %}
+
+{% block content %}
+<style>
+  /* Colores crema/dorado */
+  .bg-cream-100 { background-color: #FFF8E1; }
+  .bg-cream-200 { background-color: #FFECB3; }
+  .bg-cream-300 { background-color: #FFE082; }
+  .bg-cream-400 { background-color: #FFD54F; }
+  .bg-cream-500 { background-color: #FFCA28; }
+  .bg-cream-600 { background-color: #FFC107; }
+  .text-cream-600 { color: #FFC107; }
+  .text-cream-700 { color: #FFA000; }
+  .border-cream-400 { border-color: #FFD54F; }
+  .border-cream-500 { border-color: #FFCA28; }
+  .hover\:bg-cream-500:hover { background-color: #FFCA28; }
+  .hover\:bg-cream-600:hover { background-color: #FFC107; }
+  .hover\:text-cream-600:hover { color: #FFC107; }
+  .focus\:ring-cream-500:focus { --tw-ring-color: #FFCA28; }
+  
+  /* Colores rojo */
+  .bg-red-500 { background-color: #F44336; }
+  .bg-red-600 { background-color: #E53935; }
+  .bg-red-700 { background-color: #4c0909; }
+  .text-red-500 { color: #F44336; }
+  .text-red-600 { color: #E53935; }
+  .border-red-500 { border-color: #F44336; }
+  .border-red-600 { border-color: #E53935; }
+  .hover\:bg-red-600:hover { background-color: #E53935; }
+  .hover\:bg-red-700:hover { background-color: #461c1c; }
+  
+  /* Colores azul claro */
+  .bg-lightblue-100 { background-color: #E1F5FE; }
+  .bg-lightblue-200 { background-color: #B3E5FC; }
+  .bg-lightblue-300 { background-color: #81D4FA; }
+  .bg-lightblue-400 { background-color: #4ff7e3; }
+  .bg-lightblue-500 { background-color: #29B6F6; }
+  .bg-lightblue-600 { background-color: #03A9F4; }
+  .text-lightblue-600 { color: #03A9F4; }
+  .text-lightblue-700 { color: #0288D1; }
+  .border-lightblue-400 { border-color: #4FC3F7; }
+  .border-lightblue-500 { border-color: #29B6F6; }
+  .hover\:bg-lightblue-500:hover { background-color: #29B6F6; }
+  .hover\:bg-lightblue-600:hover { background-color: #03A9F4; }
+  .hover\:text-lightblue-600:hover { color: #03A9F4; }
+  .focus\:ring-lightblue-500:focus { --tw-ring-color: #29B6F6; }
+</style>
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+                <div class="p-6 md:p-8">
+                    <!-- Header -->
+                    <div class="text-center mb-6">
+                        <h1 class="text-2xl font-bold text-gray-900 mb-2">Thanks for your order!</h1>
+                        <p class="text-gray-600">Your payment was successful and your order is being processed.</p>
+                    </div>
+                    
+                    <!-- Order Summary -->
+                    <div class="border-t border-b border-gray-200 py-4 mb-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600">Order #</span>
+                            <span class="font-medium">{{ order.id }}</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600">Date</span>
+                            <span>{{ order.created_at|date:"F j, Y" }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Total</span>
+                            <span class="font-bold">${{ order.total_amount|floatformat:2 }}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Items -->
+                    <h3 class="text-lg font-semibold mb-3">Order Items</h3>
+                    <ul class="space-y-3 mb-6">
+                        {% for item in items %}
+                            <li class="flex justify-between">
+                                <span>{{ item.product.name }} × {{ item.quantity }}</span>
+                                <span>${{ item.price|floatformat:2 }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <!-- Footer -->
+                    <div class="text-center text-sm text-gray-500">
+                        <p>Questions? Contact us at <a href="mailto:support@marketplace.com" class="text-primary-600">support@marketplace.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

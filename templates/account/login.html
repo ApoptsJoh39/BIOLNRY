@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In - Marketplace{% endblock %}
+
+{% block content %}
+<style>
+  /* Colores crema/dorado */
+  .bg-cream-100 { background-color: #FFF8E1; }
+  .bg-cream-200 { background-color: #FFECB3; }
+  .bg-cream-300 { background-color: #FFE082; }
+  .bg-cream-400 { background-color: #FFD54F; }
+  .bg-cream-500 { background-color: #FFCA28; }
+  .bg-cream-600 { background-color: #FFC107; }
+  .text-cream-600 { color: #FFC107; }
+  .text-cream-700 { color: #FFA000; }
+  .border-cream-400 { border-color: #FFD54F; }
+  .border-cream-500 { border-color: #FFCA28; }
+  .hover\:bg-cream-500:hover { background-color: #FFCA28; }
+  .hover\:bg-cream-600:hover { background-color: #FFC107; }
+  .hover\:text-cream-600:hover { color: #FFC107; }
+  .focus\:ring-cream-500:focus { --tw-ring-color: #FFCA28; }
+  
+  /* Colores rojo */
+  .bg-red-500 { background-color: #F44336; }
+  .bg-red-600 { background-color: #E53935; }
+  .bg-red-700 { background-color: #4c0909; }
+  .text-red-500 { color: #F44336; }
+  .text-red-600 { color: #E53935; }
+  .border-red-500 { border-color: #F44336; }
+  .border-red-600 { border-color: #E53935; }
+  .hover\:bg-red-600:hover { background-color: #E53935; }
+  .hover\:bg-red-700:hover { background-color: #461c1c; }
+  
+  /* Colores azul claro */
+  .bg-lightblue-100 { background-color: #E1F5FE; }
+  .bg-lightblue-200 { background-color: #B3E5FC; }
+  .bg-lightblue-300 { background-color: #81D4FA; }
+  .bg-lightblue-400 { background-color: #4ff7e3; }
+  .bg-lightblue-500 { background-color: #29B6F6; }
+  .bg-lightblue-600 { background-color: #03A9F4; }
+  .text-lightblue-600 { color: #03A9F4; }
+  .text-lightblue-700 { color: #0288D1; }
+  .border-lightblue-400 { border-color: #4FC3F7; }
+  .border-lightblue-500 { border-color: #29B6F6; }
+  .hover\:bg-lightblue-500:hover { background-color: #29B6F6; }
+  .hover\:bg-lightblue-600:hover { background-color: #03A9F4; }
+  .hover\:text-lightblue-600:hover { color: #03A9F4; }
+  .focus\:ring-lightblue-500:focus { --tw-ring-color: #29B6F6; }
+</style>
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
+            <div class="p-6 md:p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-heading font-bold text-gray-900 mb-2">Sign In</h1>
+                    <p class="text-gray-600">Welcome back! Sign in to access your account</p>
+                </div>
+                
+                <form class="login" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="mb-6 p-4 bg-error-50 text-error-700 rounded-md">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="mb-4">
+                        <label for="id_login" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <input type="email" name="login" id="id_login" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" required>
+                        {% if form.login.errors %}
+                            <p class="mt-1 text-sm text-error-600">{{ form.login.errors }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-1">
+                            <label for="id_password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <a href="{% url 'account_reset_password' %}" class="text-sm text-primary-600 hover:text-primary-700">Forgot password?</a>
+                        </div>
+                        <input type="password" name="password" id="id_password" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50" required>
+                        {% if form.password.errors %}
+                            <p class="mt-1 text-sm text-error-600">{{ form.password.errors }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex items-center">
+                            <input type="checkbox" name="remember" id="id_remember" class="h-4 w-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                            <label for="id_remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                        </div>
+                    </div>
+                    
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-black rounded-md shadow-sm text-sm font-medium text-black bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        Sign In
+                    </button>
+                </form>
+                
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        Don't have an account? <a href="{% url 'account_signup' %}" class="font-medium text-primary-600 hover:text-primary-700">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,341 @@
+{% extends 'base.html' %}
+
+{% block title %}Marketplace - Home{% endblock %}
+
+{% block content %}
+<style>
+  /* Colores crema/dorado */
+  .bg-cream-100 { background-color: #FFF8E1; }
+  .bg-cream-200 { background-color: #FFECB3; }
+  .bg-cream-300 { background-color: #FFE082; }
+  .bg-cream-400 { background-color: #FFD54F; }
+  .bg-cream-500 { background-color: #FFCA28; }
+  .bg-cream-600 { background-color: #FFC107; }
+  .text-cream-600 { color: #FFC107; }
+  .text-cream-700 { color: #FFA000; }
+  .border-cream-400 { border-color: #FFD54F; }
+  .border-cream-500 { border-color: #FFCA28; }
+  .hover\:bg-cream-500:hover { background-color: #FFCA28; }
+  .hover\:bg-cream-600:hover { background-color: #FFC107; }
+  .hover\:text-cream-600:hover { color: #FFC107; }
+  .focus\:ring-cream-500:focus { --tw-ring-color: #FFCA28; }
+  
+  /* Colores rojo */
+  .bg-red-500 { background-color: #F44336; }
+  .bg-red-600 { background-color: #E53935; }
+  .bg-red-700 { background-color: #4c0909; }
+  .text-red-500 { color: #F44336; }
+  .text-red-600 { color: #E53935; }
+  .border-red-500 { border-color: #F44336; }
+  .border-red-600 { border-color: #E53935; }
+  .hover\:bg-red-600:hover { background-color: #E53935; }
+  .hover\:bg-red-700:hover { background-color: #461c1c; }
+  
+  /* Colores azul claro */
+  .bg-lightblue-100 { background-color: #E1F5FE; }
+  .bg-lightblue-200 { background-color: #B3E5FC; }
+  .bg-lightblue-300 { background-color: #81D4FA; }
+  .bg-lightblue-400 { background-color: #4ff7e3; }
+  .bg-lightblue-500 { background-color: #29B6F6; }
+  .bg-lightblue-600 { background-color: #03A9F4; }
+  .text-lightblue-600 { color: #03A9F4; }
+  .text-lightblue-700 { color: #0288D1; }
+  .border-lightblue-400 { border-color: #4FC3F7; }
+  .border-lightblue-500 { border-color: #29B6F6; }
+  .hover\:bg-lightblue-500:hover { background-color: #29B6F6; }
+  .hover\:bg-lightblue-600:hover { background-color: #03A9F4; }
+  .hover\:text-lightblue-600:hover { color: #03A9F4; }
+  .focus\:ring-lightblue-500:focus { --tw-ring-color: #29B6F6; }
+</style>
+
+    <!-- Hero Section -->
+    <section class="bg-cream-100 from-primary-600 to-primary-800 text-black">
+        <div class="container mx-auto px-4 py-16 md:py-24">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6 animate-fade-in">Welcome to Our Marketplace</h1>
+                <p class="text-lg md:text-xl mb-8 animate-slide-up">Shop with confidence and enjoy special pricing based on your membership level.</p>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-4 mb-8 animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="bg-lightblue-200 bg-opacity-10 rounded-lg p-6 text-center backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
+                        <h3 class="text-xl font-semibold mb-2">Guest Shopper</h3>
+                        <p class="text-sm mb-4">Shop without an account</p>
+                        <p class="font-medium">Standard pricing + 10%</p>
+                    </div>
+                    
+                    <div class="bg-lightblue-200  bg-opacity-10 rounded-lg p-6 text-center backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
+                        <h3 class="text-xl font-semibold mb-2">Regular Member</h3>
+                        <p class="text-sm mb-4">Create a free account</p>
+                        <p class="font-medium">Standard pricing</p>
+                    </div>
+                    
+                    <div class="bg-lightblue-200  bg-opacity-10 rounded-lg p-6 text-center backdrop-filter backdrop-blur-sm border border-white border-opacity-20 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-accent-500 text-red-600 px-2 py-1 font-semibold rounded-bl-lg">BEST VALUE</div>
+                        <h3 class="text-xl font-semibold mb-2">Business Member</h3>
+                        <p class="text-sm mb-4">For our business customers</p>
+                        <p class="font-medium">25% off standard pricing</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up" style="animation-delay: 0.4s;">
+                    <a href="{% url 'product_list' %}" class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-700 focus:ring-white">
+                        Browse Products
+                    </a>
+                    <a href="{% url 'account_signup' %}" class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-700 focus:ring-white">
+                        Sign Up Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Categories -->
+    <section class="py-12 bg-cream-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-heading font-bold text-center mb-8">Shop by Category</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                {% for category in categories %}
+                    <a href="{% url 'product_list_by_category' category.slug %}" class="group">
+                        <div class="bg-lightblue-300 rounded-lg p-6 text-center transition-all duration-300 group-hover:shadow-md group-hover:bg-gray-50">
+                            <div class="w-12 h-12 mx-auto mb-4 text-primary-600 group-hover:text-primary-700">
+                                <!-- Category icon (placeholder) -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                                </svg>
+                            </div>
+                            <h3 class="font-medium text-gray-900 group-hover:text-primary-600">{{ category.name }}</h3>
+                        </div>
+                    </a>
+                {% empty %}
+                    <!-- Placeholder categories if none exist yet -->
+                    <div class="bg-gray-100 rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 mx-auto mb-4 text-primary-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-medium text-gray-900">Electronics</h3>
+                    </div>
+                    <!-- Additional placeholder categories -->
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Products -->
+    <section class="py-12 bg-lightblue-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-heading font-bold text-center mb-2">Featured Products</h2>
+            <p class="text-gray-600 text-center mb-8">Check out our latest and most popular items</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for item in products_with_prices %}
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden transition-shadow duration-300 hover:shadow-md group">
+                        <a href="{{ item.product.get_absolute_url }}">
+                            <div class="aspect-w-16 aspect-h-9 bg-gray-200 relative overflow-hidden">
+                                {% if item.product.image %}
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105">
+                                {% else %}
+                                    <!-- Placeholder image if no product image -->
+                                    <div class="flex items-center justify-center h-full bg-gray-200 text-gray-400">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                {% endif %}
+                                
+                                {% if user.is_authenticated and user.user_type == 'business' %}
+                                    <div class="absolute top-0 right-0 bg-accent-500 text-white text-xs px-2 py-1 font-semibold">
+                                        25% OFF
+                                    </div>
+                                {% elif not user.is_authenticated %}
+                                    <div class="absolute top-0 right-0 bg-warning-500 text-white text-xs px-2 py-1 font-semibold">
+                                        +10%
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                        
+                        <div class="p-4">
+                            <a href="{{ item.product.get_absolute_url }}">
+                                <h3 class="font-medium text-gray-900 mb-1 group-hover:text-primary-600">{{ item.product.name }}</h3>
+                            </a>
+                            <p class="text-sm text-gray-500 mb-2 line-clamp-2">{{ item.product.description|truncatechars:80 }}</p>
+                            
+                            <div class="flex items-baseline justify-between mt-3">
+                                <div>
+                                    <span class="text-lg font-semibold text-gray-900">${{ item.price|floatformat:2 }}</span>
+                                    {% if user_type == 'guest' %}
+                                        <span class="text-xs text-warning-600 ml-1">(Guest price)</span>
+                                    {% elif user_type == 'business' %}
+                                        <span class="text-xs text-accent-600 ml-1">(Business price)</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <form method="post" action="{% url 'add_to_cart' item.product.id %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="inline-flex items-center justify-center p-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        </svg>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-gray-500">No products available yet. Check back soon!</p>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="{% url 'product_list' %}" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-black bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                    View All Products
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why Choose Us -->
+    <section class="py-12 bg-black">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-heading font-bold text-center mb-12">Why Choose Our Marketplace</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 text-primary-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Tiered Pricing</h3>
+                    <p class="text-gray-600">Get better prices when you sign up for an account. Business users enjoy an additional 25% discount on all products.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 text-primary-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Secure Checkout</h3>
+                    <p class="text-gray-600">Our checkout process is secured with Stripe, ensuring your payment information is always protected.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 text-primary-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Digital Library</h3>
+                    <p class="text-gray-600">Access all your purchased products in one place with our convenient digital library system.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-heading font-bold text-center mb-12">What Our Customers Say</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"As a business user, I love the 25% discount on all products. It's saved my company thousands of dollars over the past year!"</p>
+                    <div class="font-medium">John D., Business Owner</div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"The checkout process is incredibly smooth and I love being able to access all my purchased items in my digital library."</p>
+                    <div class="font-medium">Sarah M., Regular Customer</div>
+                </div>
+                
+                <div class="bg-black p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 flex">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-4">"I was hesitant about the 15-30 day shipping time, but the quality of the products and the great prices make it worth the wait!"</p>
+                    <div class="font-medium">Michael T., Regular Customer</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="py-16 bg-cream-200 from-accent-600 to-accent-800 text-black">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-heading font-bold mb-6">Ready to Start Shopping?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Sign up today to get standard pricing or become a business member for 25% off on all products!</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="{% url 'product_list' %}" class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-700 focus:ring-white">
+                    Browse Products
+                </a>
+                <a href="{% url 'account_signup' %}" class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-700 focus:ring-white">
+                    Create an Account
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

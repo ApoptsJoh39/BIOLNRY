@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Cart - Marketplace{% endblock %}
+
+{% block content %}
+<style>
+    /* Colores crema/dorado */
+  .bg-cream-100 { background-color: #FFF8E1; }
+  .bg-cream-200 { background-color: #FFECB3; }
+  .bg-cream-300 { background-color: #FFE082; }
+  .bg-cream-400 { background-color: #FFD54F; }
+  .bg-cream-500 { background-color: #FFCA28; }
+  .bg-cream-600 { background-color: #FFC107; }
+  .text-cream-600 { color: #FFC107; }
+  .text-cream-700 { color: #FFA000; }
+  .border-cream-400 { border-color: #FFD54F; }
+  .border-cream-500 { border-color: #FFCA28; }
+  .hover\:bg-cream-500:hover { background-color: #FFCA28; }
+  .hover\:bg-cream-600:hover { background-color: #FFC107; }
+  .hover\:text-cream-600:hover { color: #FFC107; }
+  .focus\:ring-cream-500:focus { --tw-ring-color: #FFCA28; }
+  
+  /* Colores rojo */
+  .bg-red-500 { background-color: #F44336; }
+  .bg-red-600 { background-color: #E53935; }
+  .bg-red-700 { background-color: #4c0909; }
+  .text-red-500 { color: #F44336; }
+  .text-red-600 { color: #E53935; }
+  .border-red-500 { border-color: #F44336; }
+  .border-red-600 { border-color: #E53935; }
+  .hover\:bg-red-600:hover { background-color: #E53935; }
+  .hover\:bg-red-700:hover { background-color: #461c1c; }
+  
+  /* Colores azul claro */
+  .bg-lightblue-100 { background-color: #E1F5FE; }
+  .bg-lightblue-200 { background-color: #B3E5FC; }
+  .bg-lightblue-300 { background-color: #81D4FA; }
+  .bg-lightblue-400 { background-color: #4ff7e3; }
+  .bg-lightblue-500 { background-color: #29B6F6; }
+  .bg-lightblue-600 { background-color: #03A9F4; }
+  .text-lightblue-600 { color: #03A9F4; }
+  .text-lightblue-700 { color: #0288D1; }
+  .border-lightblue-400 { border-color: #4FC3F7; }
+  .border-lightblue-500 { border-color: #29B6F6; }
+  .hover\:bg-lightblue-500:hover { background-color: #29B6F6; }
+  .hover\:bg-lightblue-600:hover { background-color: #03A9F4; }
+  .hover\:text-lightblue-600:hover { color: #03A9F4; }
+  .focus\:ring-lightblue-500:focus { --tw-ring-color: #29B6F6; }
+</style>
+
+<section class="py-8">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-heading font-bold mb-8">Your Shopping Cart</h1>
+        
+        {% if cart_items %}
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Cart Items -->
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                        <div class="p-6">
+                            <div class="hidden sm:grid grid-cols-12 gap-4 pb-4 mb-4 border-b border-gray-200 text-sm font-medium text-gray-500">
+                                <div class="col-span-6">Product</div>
+                                <div class="col-span-2 text-center">Price</div>
+                                <div class="col-span-2 text-center">Quantity</div>
+                                <div class="col-span-2 text-right">Total</div>
+                            </div>
+                            
+                            {% for item in cart_items %}
+                                <div class="grid grid-cols-12 gap-4 py-4 {% if not forloop.last %}border-b border-gray-200{% endif %}">
+                                    <!-- Product -->
+                                    <div class="col-span-12 sm:col-span-6 flex items-center">
+                                        <div class="w-20 h-20 bg-gray-100 rounded-md flex-shrink-0 mr-4 overflow-hidden">
+                                            {% if item.product.image %}
+                                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
+                                            {% else %}
+                                                <div class="flex items-center justify-center h-full bg-gray-200 text-gray-400">
+                                                    <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><!-- Placeholder icon --></svg>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <h3 class="text-base font-medium text-gray-900">{{ item.product.name }}</h3>
+                                            <p class="text-sm text-gray-500">{{ item.product.category.name }}</p>
+                                            {% if item.size or item.color %}
+                                                <p class="text-sm text-gray-600 mt-1">
+                                                    {% if item.size %}Size: <strong>{{ item.size }}</strong>{% endif %}
+                                                    {% if item.size and item.color %}, {% endif %}
+                                                    {% if item.color %}Color: <strong>{{ item.color }}</strong>{% endif %}
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Price -->
+                                    <div class="col-span-4 sm:col-span-2 flex items-center justify-center">
+                                        <span class="font-medium text-gray-900">${{ item.price|floatformat:2 }}</span>
+                                    </div>
+                                    
+                                    <!-- Quantity -->
+                                    <div class="col-span-4 sm:col-span-2 flex items-center justify-center">
+                                        <form method="post" action="{% url 'update_cart' item.item_key %}">
+                                            {% csrf_token %}
+                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" class="w-16 text-center border-gray-300 rounded-md shadow-sm">
+                                            <button type="submit" class="ml-2 px-3 py-1 bg-primary-600 text-white rounded-md hover:bg-primary-700">Update</button>
+                                        </form>
+                                    </div>
+                                    
+                                    <!-- Total -->
+                                    <div class="col-span-4 sm:col-span-2 flex items-center justify-end">
+                                        <span class="font-medium text-gray-900">${{ item.total|floatformat:2 }}</span>
+                                        <form method="post" action="{% url 'remove_from_cart' item.item_key %}" class="ml-2">
+                                            {% csrf_token %}
+                                            <button type="submit" class="p-1 text-error-600 hover:text-error-800">
+                                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><!-- Remove icon --></svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- Order Summary -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white rounded-lg shadow-sm p-6">
+                            <h2 class="text-lg font-semibold mb-4">Order Summary</h2>
+                            <div class="border-b pb-4 mb-4">
+                                <div class="flex justify-between mb-2"><span>Subtotal</span><span>${{ total|floatformat:2 }}</span></div>
+                                <div class="flex justify-between"><span>Shipping</span><span>Free</span></div>
+                            </div>
+                            <div class="flex justify-between font-semibold text-lg mb-4">
+                                <span>Total</span>
+                                <span>${{ total|floatformat:2 }}</span>
+                            </div>
+                            <a href="{% url 'checkout' %}" class="block w-full text-center px-6 py-3 border rounded-md bg-primary-600 text-black font-medium hover:bg-primary-700">Proceed to Checkout</a>
+                            <div class="mt-4"><a href="{% url 'product_list' %}" class="text-primary-600 hover:text-primary-700 text-sm">Continue Shopping</a></div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-center bg-white p-8 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-semibold mb-2">Your cart is empty</h2>
+                    <p class="text-gray-600 mb-6">Add some products to get started!</p>
+                    <a href="{% url 'product_list' %}" class="px-6 py-3 rounded-md bg-primary-600 text-white font-medium hover:bg-primary-700">Start Shopping</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
