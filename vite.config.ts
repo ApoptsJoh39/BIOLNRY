@@ -1,18 +1,19 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
   build: {
+    // Relative to the project root
     outDir: './static/dist',
     rollupOptions: {
       input: {
-        main: './static_src/src/main.tsx',
+        // This is your CSS entry point
+        styles: './static_src/src/input.css',
       },
+      output: {
+        // This will output a styles.css file
+        assetFileNames: '[name].css'
+      }
     },
-  },
-  optimizeDeps: {
-    exclude: ['lucide-react'],
   },
 });
