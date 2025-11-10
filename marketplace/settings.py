@@ -144,7 +144,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_PORT = 1025  # Usa MailHog o Python SMTP debug server
 
 NPM_BIN_PATH = "/usr/bin/npm"
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  
+#NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  
 
 # En settings.py
 CSRF_COOKIE_SECURE = True  # Para HTTPS
