@@ -30,7 +30,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary',
     'django.contrib.sites',
     
     'allauth', 'allauth.account', 'allauth.socialaccount',
@@ -85,16 +87,14 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# --- STATIC FILES CONFIGURATION (SÓLO UNA VEZ) ---
+# --- STATIC & MEDIA FILES CONFIGURATION ---
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'static', 'dist'),  # Si necesitas esta ruta
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# --- Note: MEDIA_URL and MEDIA_ROOT are now configured below, depending on DEBUG status ---
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -121,13 +121,13 @@ STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
 
-# --- SECURITY SETTINGS (SMART/ADAPTIVE) ---
+# --- SECURITY & STORAGE SETTINGS (ENVIRONMENT-DEPENDENT) ---
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if host not in ['localhost', '127.0.0.1']]
 CSRF_TRUSTED_ORIGINS.extend([f"http://{host}" for host in ALLOWED_HOSTS])
 CSRF_COOKIE_HTTPONLY = True
 
-# Production-only settings
 if not DEBUG:
+    # Production-only settings
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
@@ -135,8 +135,17 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     
-    # WhiteNoise configuration for production
+    # WhiteNoise configuration for static files
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+    # Cloudinary configuration for media files
+    CLOUDINARY_STORAGE = {
+        'CLOUDINARY_URL': env('CLOUDINARY_URL')
+    }
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 else:
-    # Para desarrollo
+    # Development-only settings
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

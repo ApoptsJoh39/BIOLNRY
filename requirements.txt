@@ -48,3 +48,5 @@ tzdata==2025.2
 urllib3==2.4.0
 webencodings==0.5.1
 whitenoise==6.6.0
+cloudinary==1.40.0
+django-cloudinary-storage==0.3.0
