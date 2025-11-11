@@ -1,6 +1,6 @@
-'''
+"""
 Django settings for marketplace project.
-'''
+"""
 import os
 from pathlib import Path
 import environ
@@ -135,8 +135,8 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     
-    # WhiteNoise configuration for static files
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # WhiteNoise configuration for static files (using a more robust engine)
+    STATICFILES_STORAGE = 'whitenoise.storage.ManifestStaticFilesStorage'
 
     # Cloudinary configuration for media files
     CLOUDINARY_STORAGE = {
