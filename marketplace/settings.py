@@ -22,7 +22,6 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['*']
 
-
 # --- Application definition ---
 
 INSTALLED_APPS = [
@@ -41,10 +40,9 @@ INSTALLED_APPS = [
     'marketplace',
 ]
 
-# MIDDLEWARE is now configured for WhiteNoise in production
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Added for WhiteNoise
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -74,22 +72,36 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'marketplace.wsgi.application'
 DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
-AUTH_PASSWORD_VALIDATORS = [{'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'}, {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'}, {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'}, {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'}]
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'}
+]
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# --- STATIC FILES CONFIGURATION (SÓLO UNA VEZ) ---
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'static', 'dist')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Important for WhiteNoise
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static', 'dist'),  # Si necesitas esta ruta
+]
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.CustomUser'
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend', 'allauth.account.auth_backends.AuthenticationBackend']
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
 SITE_ID = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
@@ -104,18 +116,14 @@ TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = ["127.0.0.1"]
 NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
-
 # --- STRIPE SETTINGS (SECURE) ---
 STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
 
-
 # --- SECURITY SETTINGS (SMART/ADAPTIVE) ---
-
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if host not in ['localhost', '127.0.0.1']]
 CSRF_TRUSTED_ORIGINS.extend([f"http://{host}" for host in ALLOWED_HOSTS])
-
 CSRF_COOKIE_HTTPONLY = True
 
 # Production-only settings
@@ -127,5 +135,8 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     
-    # WhiteNoise configuration for serving static files efficiently
+    # WhiteNoise configuration for production
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else:
+    # Para desarrollo
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'

@@ -8,7 +8,7 @@ from orders import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('favicon.ico', RedirectView.as_view(url=static('favicon.ico'))),
+    path('favicon.ico', RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico')),
     path('', include('pages.urls')),
     path('products/', include('products.urls')),
     #path('orders/checkout/', views.checkout, name='checkout'),
