@@ -1,25 +1,30 @@
+'''
+Django settings for marketplace project.
+'''
 import os
 from pathlib import Path
 import environ
-from dotenv import load_dotenv
 
-env = environ.Env()
-environ.Env.read_env()
+# Initialize django-environ, with a default for DEBUG
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-load_dotenv()
+# Correctly read the .env file located at the project root
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+# --- Core Security Settings ---
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
-
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['*']
 
-# Application definition
+
+# --- Application definition ---
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -29,23 +34,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     
-    # Third party apps
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'marketplace',
-    'tailwind',
-    'theme',
+    'allauth', 'allauth.account', 'allauth.socialaccount',
+    'tailwind', 'theme',
     
-    # Local apps
-    'products',
-    'users',
-    'orders',
-    'pages',
+    'products', 'users', 'orders', 'pages',
 ]
 
+# MIDDLEWARE is now configured for WhiteNoise in production
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Added for WhiteNoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -74,95 +72,59 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'marketplace.wsgi.application'
-
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# Password validation
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
-
-# Internationalization
+DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}}
+AUTH_PASSWORD_VALIDATORS = [{'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'}, {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'}, {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'}, {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'}]
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Media files
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, 'static', 'dist')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Important for WhiteNoise
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Authentication
 AUTH_USER_MODEL = 'users.CustomUser'
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend', 'allauth.account.auth_backends.AuthenticationBackend']
 SITE_ID = 1
-
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_UNIQUE_EMAIL = True
-
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-# Email settings (use console email backend for development)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_HOST = 'localhost'
-#EMAIL_PORT = 1025  # Usa MailHog o Python SMTP debug server
-
-NPM_BIN_PATH = "/usr/bin/npm"
-#NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"  
-
-# En settings.py
-CSRF_COOKIE_SECURE = True  # Para HTTPS
-CSRF_COOKIE_HTTPONLY = False  # Para permitir acceso desde JS
-CSRF_TRUSTED_ORIGINS = ['https://e15834c32ec2.ngrok-free.app']  # Configurar correctamente
-
-# Stripe settings
-STRIPE_PUBLIC_KEY = os.environ.get('STRIPE_PUBLIC_KEY')
-STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
-
-# Tailwind configuration
 TAILWIND_APP_NAME = 'theme'
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
+INTERNAL_IPS = ["127.0.0.1"]
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://7d61-2806-10a6-d-6c91-c70-482-18e2-b297.ngrok-free.app',
-    # Puedes añadir otros dominios confiables aquí
-]
+
+# --- STRIPE SETTINGS (SECURE) ---
+STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
+
+
+# --- SECURITY SETTINGS (SMART/ADAPTIVE) ---
+
+CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if host not in ['localhost', '127.0.0.1']]
+CSRF_TRUSTED_ORIGINS.extend([f"http://{host}" for host in ALLOWED_HOSTS])
+
+CSRF_COOKIE_HTTPONLY = True
+
+# Production-only settings
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    
+    # WhiteNoise configuration for serving static files efficiently
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
