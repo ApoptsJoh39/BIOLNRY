@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'tailwind', 'theme',
     
     'products', 'users', 'orders', 'pages',
+    'marketplace',
 ]
 
 # MIDDLEWARE is now configured for WhiteNoise in production
