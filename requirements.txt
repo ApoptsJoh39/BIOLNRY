@@ -7,6 +7,7 @@ cffi==1.17.1
 chardet==5.2.0
 charset-normalizer==3.4.2
 click==8.2.1
+cloudinary==1.40.0
 colorama==0.4.6
 cookiecutter==2.6.0
 cryptography==45.0.2
@@ -14,8 +15,10 @@ defusedxml==0.7.1
 Django==5.0.6
 django-allauth==0.59.0
 django-browser-reload==1.18.0
+django-cloudinary-storage==0.3.0
 django-environ==0.11.2
 django-tailwind==3.8.0
+dj-database-url==2.1.0
 gunicorn==23.0.0
 idna==3.10
 Jinja2==3.1.6
@@ -25,6 +28,7 @@ mdurl==0.1.2
 oauthlib==3.2.2
 packaging==25.0
 pillow==10.4.0
+psycopg2-binary==2.9.9
 pycparser==2.22
 Pygments==2.19.1
 PyJWT==2.10.1
@@ -48,5 +52,3 @@ tzdata==2025.2
 urllib3==2.4.0
 webencodings==0.5.1
 whitenoise==6.6.0
-cloudinary==1.40.0
-django-cloudinary-storage==0.3.0
