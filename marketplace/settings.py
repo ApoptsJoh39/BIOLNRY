@@ -30,8 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.staticfiles', # Moved before cloudinary_storage to fix collectstatic conflict
     'cloudinary_storage',
-    'django.contrib.staticfiles',
     'cloudinary',
     'django.contrib.sites',
     
@@ -159,4 +159,3 @@ else:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#JHS197ingbiotec
