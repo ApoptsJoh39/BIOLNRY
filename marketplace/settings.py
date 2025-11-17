@@ -146,7 +146,7 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     
     # WhiteNoise configuration for static files (using a more robust engine)
-    STATICFILES_STORAGE = 'whitenoise.storage.ManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     # Cloudinary configuration for media files
     CLOUDINARY_STORAGE = {
