@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from allauth.account.forms import SignupForm
 from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
@@ -13,7 +12,7 @@ class CustomUserChangeForm(UserChangeForm):
         model = CustomUser
         fields = ('email', 'username', 'user_type')
 
-class CustomSignupForm(SignupForm):
+class CustomSignupForm(forms.Form):
     user_type = forms.ChoiceField(
         choices=CustomUser.USER_TYPE_CHOICES,
         required=True,
