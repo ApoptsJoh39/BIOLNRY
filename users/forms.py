@@ -19,8 +19,15 @@ class CustomSignupForm(forms.Form):
         widget=forms.RadioSelect
     )
     
-    def save(self, request):
-        user = super(CustomSignupForm, self).save(request)
+    def signup(self, request, user):
+        """Método OBLIGATORIO para allauth"""
         user.user_type = self.cleaned_data['user_type']
         user.save()
         return user
+  #  def save(self, request):
+   #     user = super(CustomSignupForm, self).save(request)
+    #    user.user_type = self.cleaned_data['user_type']
+     #   user.save()
+      #  return user
+
+         
