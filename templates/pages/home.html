@@ -52,36 +52,36 @@
     <section class="bg-cream-100 from-primary-600 to-primary-800 text-black">
         <div class="container mx-auto px-4 py-16 md:py-24">
             <div class="max-w-3xl mx-auto text-center">
-                <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6 animate-fade-in">Welcome to Our Marketplace</h1>
-                <p class="text-lg md:text-xl mb-8 animate-slide-up">Shop with confidence and enjoy special pricing based on your membership level.</p>
+                <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6 animate-fade-in">Bienvenido a BIOLNRY</h1>
+                <p class="text-lg md:text-xl mb-8 animate-slide-up">Compra responsable con confianza y disfruta con precios de fabrica especiales según tu nivel de membresía.</p>
                 
                 <div class="flex flex-col md:flex-row justify-center gap-4 mb-8 animate-slide-up" style="animation-delay: 0.2s;">
                     <div class="bg-lightblue-200 bg-opacity-10 rounded-lg p-6 text-center backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
-                        <h3 class="text-xl font-semibold mb-2">Guest Shopper</h3>
-                        <p class="text-sm mb-4">Shop without an account</p>
-                        <p class="font-medium">Standard pricing + 10%</p>
+                        <h3 class="text-xl font-semibold mb-2">Cliente invitado</h3>
+                        <p class="text-sm mb-4">Compra sin cuenta</p>
+                        <p class="font-medium">Precio estandar + 10%</p>
                     </div>
                     
                     <div class="bg-lightblue-200  bg-opacity-10 rounded-lg p-6 text-center backdrop-filter backdrop-blur-sm border border-white border-opacity-20">
-                        <h3 class="text-xl font-semibold mb-2">Regular Member</h3>
-                        <p class="text-sm mb-4">Create a free account</p>
-                        <p class="font-medium">Standard pricing</p>
+                        <h3 class="text-xl font-semibold mb-2">Miembro BOLNRY</h3>
+                        <p class="text-sm mb-4">Crea una cuenta gratuita</p>
+                        <p class="font-medium">Precios estandar</p>
                     </div>
                     
                     <div class="bg-lightblue-200  bg-opacity-10 rounded-lg p-6 text-center backdrop-filter backdrop-blur-sm border border-white border-opacity-20 relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-accent-500 text-red-600 px-2 py-1 font-semibold rounded-bl-lg">BEST VALUE</div>
-                        <h3 class="text-xl font-semibold mb-2">Business Member</h3>
-                        <p class="text-sm mb-4">For our business customers</p>
-                        <p class="font-medium">25% off standard pricing</p>
+                        <div class="absolute top-0 right-0 bg-accent-500 text-red-600 px-2 py-1 font-semibold rounded-bl-lg">MEJOR VALOR</div>
+                        <h3 class="text-xl font-semibold mb-2">Empresario fundador BIOLNRY</h3>
+                        <p class="text-sm mb-4">Solo para nuestros empresarios</p>
+                        <p class="font-medium">25% de descuento al precio estandar</p>
                     </div>
                 </div>
                 
                 <div class="flex flex-col sm:flex-row justify-center gap-4 animate-slide-up" style="animation-delay: 0.4s;">
                     <a href="{% url 'product_list' %}" class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-700 focus:ring-white">
-                        Browse Products
+                        Explorar productos
                     </a>
                     <a href="{% url 'account_signup' %}" class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-700 focus:ring-white">
-                        Sign Up Now
+                        Regístrate ahora
                     </a>
                 </div>
             </div>
@@ -91,7 +91,7 @@
     <!-- Featured Categories -->
     <section class="py-12 bg-cream-100">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-heading font-bold text-center mb-8">Shop by Category</h2>
+            <h2 class="text-3xl font-heading font-bold text-center mb-8">Comprar por categoría</h2>
             
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {% for category in categories %}
@@ -125,8 +125,8 @@
     <!-- Featured Products -->
     <section class="py-12 bg-lightblue-100">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-heading font-bold text-center mb-2">Featured Products</h2>
-            <p class="text-gray-600 text-center mb-8">Check out our latest and most popular items</p>
+            <h2 class="text-3xl font-heading font-bold text-center mb-2">Nuevos productos</h2>
+            <p class="text-gray-600 text-center mb-8">Descubre los productos más recientes y populares</p>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {% for item in products_with_prices %}
@@ -193,7 +193,7 @@
             
             <div class="text-center mt-8">
                 <a href="{% url 'product_list' %}" class="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-black bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-                    View All Products
+                    Ver todos los productos
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -205,7 +205,7 @@
     <!-- Why Choose Us -->
     <section class="py-12 bg-black">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-heading font-bold text-center mb-12">Why Choose Our Marketplace</h2>
+            <h2 class="text-3xl font-heading font-bold text-center mb-12">¿Por qué elegir nuestro mercado?</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
@@ -214,8 +214,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Tiered Pricing</h3>
-                    <p class="text-gray-600">Get better prices when you sign up for an account. Business users enjoy an additional 25% discount on all products.</p>
+                    <h3 class="text-xl font-semibold mb-2">Precios escalonados</h3>
+                    <p class="text-gray-600">Obtén mejores precios al crear una cuenta. Los usuarios empresariales disfrutan de un 25 % de descuento adicional en todos los productos.</p>
                 </div>
                 
                 <div class="text-center">
@@ -224,8 +224,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Secure Checkout</h3>
-                    <p class="text-gray-600">Our checkout process is secured with Stripe, ensuring your payment information is always protected.</p>
+                    <h3 class="text-xl font-semibold mb-2">Pago seguro</h3>
+                    <p class="text-gray-600"> Nuestro proceso de pago está protegido con Stripe, lo que garantiza que su información de pago esté siempre a salvo.</p>
                 </div>
                 
                 <div class="text-center">
@@ -234,8 +234,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">Digital Library</h3>
-                    <p class="text-gray-600">Access all your purchased products in one place with our convenient digital library system.</p>
+                    <h3 class="text-xl font-semibold mb-2">Biblioteca digital</h3>
+                    <p class="text-gray-600">Acceda a todos sus productos comprados en un solo lugar con nuestro práctico sistema de biblioteca digital.</p>
                 </div>
             </div>
         </div>
@@ -244,7 +244,7 @@
     <!-- Testimonials -->
     <section class="py-12 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-heading font-bold text-center mb-12">What Our Customers Say</h2>
+            <h2 class="text-3xl font-heading font-bold text-center mb-12">Lo que dicen nuestros clientes</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white p-6 rounded-lg shadow-sm">
@@ -267,8 +267,8 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">"As a business user, I love the 25% discount on all products. It's saved my company thousands of dollars over the past year!"</p>
-                    <div class="font-medium">John D., Business Owner</div>
+                    <p class="text-gray-600 mb-4">""Como usuario empresarial, me encanta el descuento del 25% en todos los productos. ¡Le ha ahorrado Y vendido productos que me han dejado ganancias durante el último año!"</p>
+                    <div class="font-medium">John D., Empresario BIOLNRY</div>
                 </div>
                 
                 <div class="bg-white p-6 rounded-lg shadow-sm">
@@ -291,8 +291,8 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">"The checkout process is incredibly smooth and I love being able to access all my purchased items in my digital library."</p>
-                    <div class="font-medium">Sarah M., Regular Customer</div>
+                    <p class="text-gray-600 mb-4">"El proceso de compra es increíblemente sencillo y me encanta poder acceder a todos los artículos que he comprado en mi biblioteca digital."</p>
+                    <div class="font-medium">Sara M., Cliente habitual</div>
                 </div>
                 
                 <div class="bg-black p-6 rounded-lg shadow-sm">
@@ -315,8 +315,8 @@
                             </svg>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">"I was hesitant about the 15-30 day shipping time, but the quality of the products and the great prices make it worth the wait!"</p>
-                    <div class="font-medium">Michael T., Regular Customer</div>
+                    <p class="text-gray-600 mb-4">"Tenía mis dudas sobre el plazo de envío de 15 a 30 días, ¡pero la calidad de los productos y los excelentes precios hacen que la espera valga la pena!"</p>
+                    <div class="font-medium">Mario T., Cliente habitual</div>
                 </div>
             </div>
         </div>
@@ -325,15 +325,15 @@
     <!-- Call to Action -->
     <section class="py-16 bg-cream-200 from-accent-600 to-accent-800 text-black">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-heading font-bold mb-6">Ready to Start Shopping?</h2>
-            <p class="text-xl mb-8 max-w-3xl mx-auto">Sign up today to get standard pricing or become a business member for 25% off on all products!</p>
+            <h2 class="text-3xl font-heading font-bold mb-6">¿Listo para empezar a comprar?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">¡Regístrate hoy para obtener precios estándar o conviértete en miembro empresarial y obtén un 25 % de descuento en todos los productos!</p>
             
             <div class="flex flex-col sm:flex-row justify-center gap-4">
                 <a href="{% url 'product_list' %}" class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-700 focus:ring-white">
-                    Browse Products
+                    Explorar productos
                 </a>
                 <a href="{% url 'account_signup' %}" class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-md text-primary-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-700 focus:ring-white">
-                    Create an Account
+                    Crear una cuenta
                 </a>
             </div>
         </div>
